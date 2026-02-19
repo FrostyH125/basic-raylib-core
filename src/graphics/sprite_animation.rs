@@ -5,7 +5,7 @@ use crate::graphics::animation_data::AnimationData;
 pub struct SpriteAnimationInstance {
     current_frame_time: f32,
     current_frame_index: u8,
-    pub is_playing: bool,
+    pub can_play: bool,
 }
 
 impl SpriteAnimationInstance {
@@ -13,7 +13,7 @@ impl SpriteAnimationInstance {
         SpriteAnimationInstance {
             current_frame_time: 0.0,
             current_frame_index: 0,
-            is_playing: false,
+            can_play: true,
         }
     }
 
@@ -21,45 +21,39 @@ impl SpriteAnimationInstance {
         let frame_count = animation_data.frames.len() as u8;
 
         if frame_count == 0 {
-            self.is_playing = false;
+            self.can_play = false;
+            return;
+        }
+
+        if !self.can_play {
             return;
         }
 
         self.current_frame_time += dt;
 
-        if !animation_data.should_loop {
-            if (self.current_frame_index >= frame_count)
-                || (frame_count == 1 && self.current_frame_time >= animation_data.frame_duration)
-            {
-                self.current_frame_index = frame_count - 1;
-                self.is_playing = false;
-                return;
-            }
-        }
-        
-        self.is_playing = true;
-        
-        if self.current_frame_time >= animation_data.frame_duration {
-            self.current_frame_index += 1;
+        while self.current_frame_time >= animation_data.frame_duration {
             self.current_frame_time -= animation_data.frame_duration;
-            
+            self.current_frame_index += 1;
+
             if self.current_frame_index >= frame_count {
                 if animation_data.should_loop {
                     self.current_frame_index = 0;
                 } else {
                     self.current_frame_index = frame_count - 1;
+                    self.can_play = false;
+                    break;
                 }
             }
         }
     }
-    
-    pub fn draw(&self, texture: &Texture2D, pos: Vector2, anim_data: &AnimationData, d: &mut RaylibDrawHandle) {
-        anim_data.frames[self.current_frame_index as usize].draw(pos, texture, d);
+
+    pub fn draw(&self, d: &mut RaylibDrawHandle, texture: &Texture2D, pos: Vector2, anim_data: &AnimationData) {
+        anim_data.frames[self.current_frame_index as usize].draw(d, pos, texture);
     }
-    
+
     pub fn reset(&mut self) {
         self.current_frame_index = 0;
         self.current_frame_time = 0.0;
-        self.is_playing = false;
+        self.can_play = true;
     }
 }
