@@ -5,7 +5,7 @@ pub struct Sprite {
 }
 
 impl Sprite {
-    pub fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
+    pub const fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
         Sprite {
             src_rect: Rectangle { x, y, width, height },
         }
