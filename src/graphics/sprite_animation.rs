@@ -6,10 +6,17 @@ pub struct SpriteAnimationInstance {
 }
 
 impl SpriteAnimationInstance {
+    pub fn new() -> Self {
+        SpriteAnimationInstance {
+            current_frame_time: 0.0,
+            current_frame_index: 0,
+            can_play: true,
+        }
+    }
+
     pub fn reset(&mut self) {
         self.current_frame_index = 0;
         self.current_frame_time = 0.0;
         self.can_play = true;
     }
 }
-
