@@ -1,4 +1,4 @@
-use crate::{graphics::sprite_animation::SpriteAnimationInstance, sprite::Sprite};
+use crate::{graphics::sprite_animation::SpriteAnimationInstance, graphics::sprite::Sprite};
 use raylib::prelude::*;
 
 pub struct AnimationData {
