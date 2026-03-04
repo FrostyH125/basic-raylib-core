@@ -1,7 +1,7 @@
 use raylib::prelude::*;
 
 pub struct Sprite {
-    src_rect: Rectangle,
+    pub src_rect: Rectangle,
 }
 
 impl Sprite {
