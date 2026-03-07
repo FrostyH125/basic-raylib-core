@@ -4,10 +4,17 @@ pub struct Sprite {
     pub src_rect: Rectangle,
 }
 
+const INSET_FOR_SPRITE_BLEED_FIX: f32 = 1.0 / 100.0;
+
 impl Sprite {
     pub const fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
         Sprite {
-            src_rect: Rectangle { x, y, width, height },
+            src_rect: Rectangle {
+                x: x + INSET_FOR_SPRITE_BLEED_FIX,
+                y: y + INSET_FOR_SPRITE_BLEED_FIX,
+                width: width - (INSET_FOR_SPRITE_BLEED_FIX),
+                height: height - (INSET_FOR_SPRITE_BLEED_FIX),
+            },
         }
     }
 

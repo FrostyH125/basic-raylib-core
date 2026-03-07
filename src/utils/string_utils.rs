@@ -27,6 +27,12 @@ pub fn wrap_string(string: &str, max_length_in_pixels: f32, font: &Font, font_si
             current_line.clear();
             current_line.push_str(word);
         }
+        
+        //only reasonably should happen if the word ends with \n
+        if current_line.contains('\n') {
+            final_string.push_str(&current_line);
+            current_line.clear();
+        }
     }
 
     if !current_line.is_empty() {
