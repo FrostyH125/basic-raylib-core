@@ -40,7 +40,7 @@ impl AnimationData {
         }
     }
 
-        pub fn draw(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, texture: &Texture2D, pos: Vector2) {
+        pub fn draw(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D)  {
             self.frames[animation_instance.current_frame_index as usize].draw(d, pos, texture);
     }
 }
