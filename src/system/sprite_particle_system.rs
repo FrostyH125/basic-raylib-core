@@ -3,13 +3,13 @@ use raylib::{math::Vector2, prelude::RaylibDrawHandle, texture::Texture2D};
 
 use crate::system::particle::Particle;
 
-pub struct ParticleSystem {
+pub struct SpriteParticleSystem {
     particles: Vec<Particle>,
 }
 
-impl ParticleSystem {
+impl SpriteParticleSystem {
     pub fn new() -> Self {
-        ParticleSystem { particles: Vec::new() }
+        SpriteParticleSystem { particles: Vec::new() }
     }
 
     pub fn emit(
