@@ -1,4 +1,4 @@
-use basic_raylib_core::graphics::sprite::Sprite;
+use crate::graphics::sprite::Sprite;
 use raylib::math::Vector2;
 
 static DUMMY_SPRITE: Sprite = Sprite::new(0.0, 0.0, 0.0, 0.0);

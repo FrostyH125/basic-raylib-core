@@ -1,10 +1,10 @@
-use basic_raylib_core::graphics::sprite::Sprite;
+use crate::graphics::sprite::Sprite;
 use raylib::{math::Vector2, prelude::RaylibDrawHandle, texture::Texture2D};
 
-use crate::system::particle::Particle;
+use crate::system::sprite_particle::SpriteParticle;
 
 pub struct SpriteParticleSystem {
-    particles: Vec<Particle>,
+    particles: Vec<SpriteParticle>,
 }
 
 impl SpriteParticleSystem {
@@ -30,7 +30,7 @@ impl SpriteParticleSystem {
         // other side
         let real_emit_pos = Vector2::new(position.x - sprite_half_width, position.y - sprite_half_height);
 
-        let particle = Particle {
+        let particle = SpriteParticle {
             sprite,
             position: real_emit_pos,
             velocity,
