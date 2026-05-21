@@ -99,7 +99,9 @@ impl SpriteParticleSystem {
     }
 
     pub fn draw(&self, d: &mut RaylibDrawHandle, texture: &Texture2D) {
-        for particle in &self.particles {
+        for i in 0..self.n_particles {
+            let particle = &self.particles[i];
+            
             particle.sprite.draw(d, particle.position, texture);
         }
     }
