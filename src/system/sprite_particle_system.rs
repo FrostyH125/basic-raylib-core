@@ -1,7 +1,7 @@
 use crate::graphics::sprite::Sprite;
 use raylib::{math::Vector2, prelude::RaylibDrawHandle, texture::Texture2D};
 
-use crate::system::sprite_particle::SpriteParticle;
+use crate::graphics::sprite_particle::SpriteParticle;
 
 pub struct SpriteParticleSystem {
     particles: Vec<SpriteParticle>,
