@@ -1,7 +1,7 @@
 use crate::graphics::sprite::Sprite;
 use raylib::math::Vector2;
 
-static DUMMY_SPRITE: Sprite = Sprite::new(0.0, 0.0, 0.0, 0.0);
+static DUMMY_SPRITE: Sprite = Sprite::new(0, 0, 0, 0);
 
 pub struct SpriteParticle {
     pub sprite: &'static Sprite,

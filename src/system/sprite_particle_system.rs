@@ -110,7 +110,7 @@ impl SpriteParticleSystem {
 #[test]
 fn test_ps_emit_and_expire() {
     let mut ps = SpriteParticleSystem::new(1000);
-    static NOTHING_SPRITE: Sprite = Sprite::new(0.0, 0.0, 0.0, 0.0);
+    static NOTHING_SPRITE: Sprite = Sprite::new(0, 0, 0, 0);
     
     for _ in 0..=1500 {
         ps.emit(&NOTHING_SPRITE, Vector2::zero(), Vector2::zero(), Vector2::zero(), 1.0);
