@@ -11,12 +11,12 @@ impl AnimationData {
     pub fn update(&self, animation_instance: &mut SpriteAnimationInstance, dt: f32) {
         let frame_count = self.frames.len();
         
-        if !animation_instance.can_play {
+        if animation_instance.finished_playing {
             return;
         }
         
         if frame_count == 0 {
-            animation_instance.can_play = false;
+            animation_instance.finished_playing = true;
             return;
         }
             
@@ -33,7 +33,7 @@ impl AnimationData {
                     animation_instance.current_frame_index = 0;
                 } else {
                     animation_instance.current_frame_index = frame_count as u8 - 1;
-                    animation_instance.can_play = false;
+                    animation_instance.finished_playing = true;
                     break;
                 }
             }
