@@ -17,6 +17,6 @@ impl SpriteAnimationInstance {
     pub fn reset(&mut self) {
         self.current_frame_index = 0;
         self.current_frame_time = 0.0;
-        self.finished_playing = true;
+        self.finished_playing = false;
     }
 }
