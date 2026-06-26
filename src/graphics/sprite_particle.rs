@@ -9,6 +9,8 @@ pub struct SpriteParticle {
     pub velocity: Vector2,
     pub acceleration: Vector2,
     pub lifetime: f32,
+    // rotation
+    // origin
 }
 
 impl SpriteParticle {

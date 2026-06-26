@@ -61,6 +61,9 @@ impl SpriteParticleSystem {
         self.n_particles += 1;
     }
 
+    // emit_ex with rotation 
+    // the origin would automatically have to be placed as the center
+
     pub fn update(&mut self, dt: f32) {
         let mut i = 0;
 
