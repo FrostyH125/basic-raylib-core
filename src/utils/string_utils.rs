@@ -91,7 +91,7 @@ pub fn draw_string_with_horizontal_sin_wave(
 
     for (i, ch) in str.char_indices() {
         let x = pos.x + ch_size.x * i as f32;
-        let y = pos.y + ((t + sin_offset) * num_of_cycles).sin() * amplitude * max_wave_height;
+        let y = pos.y + (t * num_of_cycles + sin_offset).sin() * amplitude * max_wave_height;
 
         // necessary as d.draw_text_ex cannot take a char
         // needs to manually encode the character into a 4 byte buffer 
