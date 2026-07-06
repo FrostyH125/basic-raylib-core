@@ -91,12 +91,11 @@ pub fn draw_string_with_horizontal_sin_wave(
 
     let ch_size =
         font.measure_text(str, sin_wave_info.font_size, sin_wave_info.spacing) / Vector2::new(str.len() as f32, 1.0);
-    let mut sin_offset_local = 0.0;
 
     for (i, ch) in str.chars().enumerate() {
         let x = sin_wave_info.pos.x + ch_size.x * i as f32;
         let y = sin_wave_info.pos.y
-            + (t * sin_wave_info.wave_speed + i as f32 * sin_offset_local).sin()
+            + (t * sin_wave_info.wave_speed + i as f32 * sin_wave_info.sin_offset).sin()
                 * amplitude
                 * sin_wave_info.max_wave_height;
 
@@ -106,7 +105,5 @@ pub fn draw_string_with_horizontal_sin_wave(
         let s = ch.encode_utf8(&mut ch_buffer);
 
         d.draw_text_ex(font, s, Vector2::new(x, y), sin_wave_info.font_size, sin_wave_info.spacing, sin_wave_info.color);
-
-        sin_offset_local += sin_wave_info.sin_offset;
     }
 }
