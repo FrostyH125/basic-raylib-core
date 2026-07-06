@@ -37,4 +37,11 @@ impl InputState {
 
         self.dragging = self.currently_pressed && distance_between_click_and_current_pos_squared >= 0.1 * 0.1;
     }
+
+    pub fn reset_and_set_zero_inputs(&mut self) {
+        self.stopped_dragging_this_frame = false;
+        self.clicked_once = false;
+        self.currently_pressed = false;
+        self.dragging = false;
+    }
 }

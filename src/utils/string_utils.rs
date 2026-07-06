@@ -39,7 +39,7 @@ pub fn wrap_string(string: &str, max_length_in_pixels: f32, font: &Font, font_si
         final_string.push_str(&current_line);
     }
 
-    final_string
+    return final_string;
 }
 
 pub fn draw_string_centered_on_pos(d: &mut RaylibDrawHandle, pos: Vector2, string: &str, font: &Font, font_size: f32, spacing: f32, color: Color) {
