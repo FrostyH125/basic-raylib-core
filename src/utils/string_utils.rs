@@ -100,6 +100,6 @@ pub fn draw_string_with_horizontal_sin_wave(
 
         d.draw_text_ex(font, s, Vector2::new(x, y), font_size, 0.0, color);
 
-        sin_offset += 0.1;
+        sin_offset += 0.5;
     }
 }
