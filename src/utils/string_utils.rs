@@ -68,7 +68,7 @@ pub fn draw_string_centered_on_pos(
 pub struct StringSinWaveParameters {
     pub pos: Vector2,
     pub max_wave_height: f32,
-    pub num_of_cycles: f32,
+    pub wave_speed: f32,
     pub sin_offset: f32,
     pub color: Color,
     pub font_size: f32,
@@ -93,10 +93,10 @@ pub fn draw_string_with_horizontal_sin_wave(
         font.measure_text(str, sin_wave_info.font_size, sin_wave_info.spacing) / Vector2::new(str.len() as f32, 1.0);
     let mut sin_offset_local = 0.0;
 
-    for (i, ch) in str.char_indices() {
+    for (i, ch) in str.chars().enumerate() {
         let x = sin_wave_info.pos.x + ch_size.x * i as f32;
         let y = sin_wave_info.pos.y
-            + ((t + sin_offset_local) * sin_wave_info.num_of_cycles).sin()
+            + (t * sin_wave_info.wave_speed + i as f32 * sin_offset_local).sin()
                 * amplitude
                 * sin_wave_info.max_wave_height;
 
