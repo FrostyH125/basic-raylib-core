@@ -85,13 +85,13 @@ pub fn draw_string_with_horizontal_sin_wave(
     let num_of_cycles = 10.0;
 
     // makes it so each char is not lined up in the wave
-    let mut sin_offset = 0.1;
+    let mut sin_offset = 1.0 / str.len() as f32;
 
     let ch_size = font.measure_text(str, font_size, 0.0) / Vector2::new(str.len() as f32, 1.0);
 
     for (i, ch) in str.char_indices() {
         let x = pos.x + ch_size.x * i as f32;
-        let y = pos.y + (t * num_of_cycles + sin_offset).sin() * amplitude * max_wave_height;
+        let y = pos.y + ((t + sin_offset) * num_of_cycles).sin() * amplitude * max_wave_height;
 
         // necessary as d.draw_text_ex cannot take a char
         // needs to manually encode the character into a 4 byte buffer 
