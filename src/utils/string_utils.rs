@@ -66,13 +66,13 @@ pub fn draw_string_centered_on_pos(
 }
 
 pub struct StringSinWaveParameters {
-    pos: Vector2,
-    max_wave_height: f32,
-    num_of_cycles: f32,
-    sin_offset: f32,
-    color: Color,
-    font_size: f32,
-    spacing: f32,
+    pub pos: Vector2,
+    pub max_wave_height: f32,
+    pub num_of_cycles: f32,
+    pub sin_offset: f32,
+    pub color: Color,
+    pub font_size: f32,
+    pub spacing: f32,
 }
 
 pub fn draw_string_with_horizontal_sin_wave(
