@@ -82,10 +82,10 @@ pub fn draw_string_with_horizontal_sin_wave(
     let progress = sin_wave_timer.progress();
     let amplitude = 1.0 - progress;
     let t = sin_wave_timer.current_time;
-    let num_of_cycles = 4.0;
+    let num_of_cycles = 8.0;
 
     // makes it so each char is not lined up in the wave
-    let mut sin_offset = 0.3;
+    let mut sin_offset = 0.5;
 
     let ch_size = font.measure_text(str, font_size, 0.0) / Vector2::new(str.len() as f32, 1.0);
 
