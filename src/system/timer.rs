@@ -33,5 +33,8 @@ impl Timer {
     pub fn reset(&mut self) {
         self.current_time = 0.0;
     }
-    
+
+    pub fn progress(&self) -> f32 {
+        return self.current_time / self.duration;
+    }  
 }
