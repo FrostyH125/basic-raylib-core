@@ -65,41 +65,48 @@ pub fn draw_string_centered_on_pos(
     d.draw_text_ex(font, string, draw_pos, font_size, spacing, color);
 }
 
+pub struct StringSinWaveParameters {
+    pos: Vector2,
+    max_wave_height: f32,
+    num_of_cycles: f32,
+    sin_offset: f32,
+    color: Color,
+    font_size: f32,
+    spacing: f32,
+}
+
 pub fn draw_string_with_horizontal_sin_wave(
     d: &mut RaylibDrawHandle,
     sin_wave_timer: &Timer,
-    pos: Vector2,
     str: &str,
-    max_wave_height: f32,
     font: &Font,
-    font_size: f32,
-    color: Color
+    sin_wave_info: &StringSinWaveParameters,
 ) {
-
     // necessary buffer for a low allocation char -> &str conversion
     let mut ch_buffer = [0u8, 4];
 
     let progress = sin_wave_timer.progress();
     let amplitude = 1.0 - progress;
     let t = sin_wave_timer.current_time;
-    let num_of_cycles = 8.0;
 
-    // makes it so each char is not lined up in the wave
-    let mut sin_offset = 1.0;
-
-    let ch_size = font.measure_text(str, font_size, 0.0) / Vector2::new(str.len() as f32, 1.0);
+    let ch_size =
+        font.measure_text(str, sin_wave_info.font_size, sin_wave_info.spacing) / Vector2::new(str.len() as f32, 1.0);
+    let mut sin_offset_local = 0.0;
 
     for (i, ch) in str.char_indices() {
-        let x = pos.x + ch_size.x * i as f32;
-        let y = pos.y + ((t + sin_offset) * num_of_cycles).sin() * amplitude * max_wave_height;
+        let x = sin_wave_info.pos.x + ch_size.x * i as f32;
+        let y = sin_wave_info.pos.y
+            + ((t + sin_offset_local) * sin_wave_info.num_of_cycles).sin()
+                * amplitude
+                * sin_wave_info.max_wave_height;
 
         // necessary as d.draw_text_ex cannot take a char
-        // needs to manually encode the character into a 4 byte buffer 
+        // needs to manually encode the character into a 4 byte buffer
         // and get a reference to it as a &str
         let s = ch.encode_utf8(&mut ch_buffer);
 
-        d.draw_text_ex(font, s, Vector2::new(x, y), font_size, 0.0, color);
+        d.draw_text_ex(font, s, Vector2::new(x, y), sin_wave_info.font_size, sin_wave_info.spacing, sin_wave_info.color);
 
-        sin_offset += 1.0;
+        sin_offset_local += sin_wave_info.sin_offset;
     }
 }
