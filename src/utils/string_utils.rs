@@ -80,8 +80,9 @@ pub fn draw_string_with_horizontal_sin_wave(
     let mut ch_buffer = [0u8, 4];
 
     let progress = sin_wave_timer.progress();
-    let amplitude = (1.0 - progress) * (1.0 - progress) * (1.0 - progress);
+    let amplitude = 1.0 - progress;
     let t = sin_wave_timer.current_time;
+    let num_of_cycles = 10.0;
 
     // makes it so each char is not lined up in the wave
     let mut sin_offset = 0.1;
@@ -90,7 +91,7 @@ pub fn draw_string_with_horizontal_sin_wave(
 
     for (i, ch) in str.char_indices() {
         let x = pos.x + ch_size.x * i as f32;
-        let y = pos.y + (t + sin_offset).sin() * amplitude * max_wave_height;
+        let y = pos.y + (t * num_of_cycles + sin_offset).sin() * amplitude * max_wave_height;
 
         // necessary as d.draw_text_ex cannot take a char
         // needs to manually encode the character into a 4 byte buffer 
