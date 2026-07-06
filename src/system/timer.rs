@@ -12,6 +12,12 @@ impl Timer {
     }
     
     pub fn track(&mut self, dt: f32) {
+
+        if self.current_time >= self.duration {
+            self.current_time = self.duration;
+            return;
+        }
+        
         self.current_time += dt;
     }
     
