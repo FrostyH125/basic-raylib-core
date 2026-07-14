@@ -48,7 +48,7 @@ impl AnimationData {
         self.frames[animation_instance.current_frame_index as usize].draw(d, pos, texture);
     }
 
-    pub fn draw_flp(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, pos: Vector2, texture: Texture2D, flp_h: bool, flp_v: bool) {
+    pub fn draw_flp(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D, flp_h: bool, flp_v: bool) {
         let sprite_ref = &self.frames[animation_instance.current_frame_index as usize];
         let spr_width = sprite_ref.src_rect.width;
         let spr_height = sprite_ref.src_rect.height;
