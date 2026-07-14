@@ -2,8 +2,7 @@ use raylib::prelude::{MouseButton::*, *};
 
 pub struct InputState {
     pub mouse_pos: Vector2,
-    previous_mouse_pos: Vector2,
-    delta: Vector2,
+    pub delta: Vector2,
     
     left_click_pos: Vector2,
     pub left_stopped_dragging_this_frame: bool,
@@ -99,8 +98,6 @@ impl InputState {
 
         self.delta = rl.get_mouse_delta();
         self.middle_roll = rl.get_mouse_wheel_move();
-        
-        self.previous_mouse_pos = self.mouse_pos;
     }
 
     pub fn reset_and_set_zero_inputs(&mut self) {
