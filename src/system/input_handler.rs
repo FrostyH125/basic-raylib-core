@@ -35,7 +35,6 @@ impl InputState {
             right_currently_held: false,
             right_clicked_once: false,
             right_dragging: false,
-            previous_mouse_pos: Default::default(),
             left_click_pos: Default::default(),
             left_stopped_dragging_this_frame: false,
             left_currently_held: false,
