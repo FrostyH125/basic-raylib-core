@@ -50,8 +50,8 @@ impl AnimationData {
 
     pub fn draw_flp(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D, flp_h: bool, flp_v: bool) {
         let sprite_ref = &self.frames[animation_instance.current_frame_index as usize];
-        let spr_width = sprite_ref.src_rect.width;
-        let spr_height = sprite_ref.src_rect.height;
+        let spr_width = sprite_ref.src_rect.width.ceil();
+        let spr_height = sprite_ref.src_rect.height.ceil();
         let flp_h_mult = match flp_h {
             true => -1.0,
             false => 1.0,
