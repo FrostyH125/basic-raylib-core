@@ -60,7 +60,7 @@ impl AnimationData {
             true => -1.0,
             false => 1.0,
         };
-        let new_sprite = Sprite::new(sprite_ref.src_rect.x as u32, sprite_ref.src_rect.y as u32, (spr_width * flp_h_mult) as u32, (spr_height * flp_v_mult) as u32);
+        let new_sprite = Sprite::new(sprite_ref.src_rect.x as i32, sprite_ref.src_rect.y as i32, (spr_width * flp_h_mult) as i32, (spr_height * flp_v_mult) as i32);
 
         let rect = Rectangle::new(pos.x, pos.y, spr_width, spr_height);
         new_sprite.draw_pro(d, rect, Vector2::zero(), 0.0, &texture);

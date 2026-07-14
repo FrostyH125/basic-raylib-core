@@ -7,7 +7,7 @@ pub struct Sprite {
 const INSET_FOR_SPRITE_BLEED_FIX: f32 = 1.0 / 100.0;
 
 impl Sprite {
-    pub const fn new(x: u32, y: u32, width: u32, height: u32) -> Self {
+    pub const fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
         Sprite {
             src_rect: Rectangle {
                 x: x as f32 + INSET_FOR_SPRITE_BLEED_FIX,
