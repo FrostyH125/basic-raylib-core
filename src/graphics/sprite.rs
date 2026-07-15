@@ -19,7 +19,7 @@ impl Sprite {
     }
 
     pub fn draw(&self, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D) {
-        d.draw_texture_rec(texture, self.src_rect, pos, Color::WHITE);
+        d.draw_texture_pro(texture, self.src_rect, Rectangle::new(pos.x.floor(), pos.y.floor(), self.src_rect.width.ceil(), self.src_rect.height.ceil()), Vector2::zero(), 0.0, Color::WHITE);
     }
 
     pub fn draw_pro(

@@ -48,7 +48,15 @@ impl AnimationData {
         self.frames[animation_instance.current_frame_index as usize].draw(d, pos, texture);
     }
 
-    pub fn draw_flp(&self, animation_instance: &SpriteAnimationInstance, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D, flp_h: bool, flp_v: bool) {
+    pub fn draw_flp(
+        &self,
+        animation_instance: &SpriteAnimationInstance,
+        d: &mut RaylibDrawHandle,
+        pos: Vector2,
+        texture: &Texture2D,
+        flp_h: bool,
+        flp_v: bool,
+    ) {
         let sprite_ref = &self.frames[animation_instance.current_frame_index as usize];
         let spr_width = sprite_ref.src_rect.width.ceil();
         let spr_height = sprite_ref.src_rect.height.ceil();
@@ -60,7 +68,12 @@ impl AnimationData {
             true => -1.0,
             false => 1.0,
         };
-        let new_sprite = Sprite::new(sprite_ref.src_rect.x as i32, sprite_ref.src_rect.y as i32, (spr_width * flp_h_mult) as i32, (spr_height * flp_v_mult) as i32);
+        let new_sprite = Sprite::new(
+            sprite_ref.src_rect.x as i32,
+            sprite_ref.src_rect.y as i32,
+            (spr_width * flp_h_mult) as i32,
+            (spr_height * flp_v_mult) as i32,
+        );
 
         let rect = Rectangle::new(pos.x, pos.y, spr_width, spr_height);
         new_sprite.draw_pro(d, rect, Vector2::zero(), 0.0, &texture);
