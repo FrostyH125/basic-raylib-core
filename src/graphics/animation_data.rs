@@ -57,7 +57,14 @@ impl AnimationData {
         flp_h: bool,
         flp_v: bool,
     ) {
-        self.frames[animation_instance.current_frame_index as usize].draw_flp(d, pos, texture, flp_h, flp_v, Color::WHITE);
+        self.frames[animation_instance.current_frame_index as usize].draw_flp(
+            d,
+            pos,
+            texture,
+            flp_h,
+            flp_v,
+            Color::WHITE,
+        );
     }
 
     pub fn draw_flp_color(
@@ -68,8 +75,22 @@ impl AnimationData {
         texture: &Texture2D,
         flp_h: bool,
         flp_v: bool,
-        tint: Color
+        tint: Color,
     ) {
         self.frames[animation_instance.current_frame_index as usize].draw_flp(d, pos, texture, flp_h, flp_v, tint);
+    }
+
+    pub fn draw_pro(
+        &self,
+        animation_instance: &SpriteAnimationInstance,
+        d: &mut RaylibDrawHandle,
+        dest_rect: Rectangle,
+        origin: Vector2,
+        rotation: f32,
+        texture: &Texture2D,
+        color: Color,
+    ) {
+        self.frames[animation_instance.current_frame_index as usize]
+            .draw_pro(d, dest_rect, origin, rotation, texture, color);
     }
 }
