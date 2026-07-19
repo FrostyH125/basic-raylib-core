@@ -1,8 +1,6 @@
 use crate::graphics::sprite::Sprite;
 use raylib::{
-    math::{Rectangle, Vector2},
-    prelude::RaylibDrawHandle,
-    texture::Texture2D,
+    color::Color, math::{Rectangle, Vector2}, prelude::RaylibDrawHandle, texture::Texture2D,
 };
 
 use crate::graphics::sprite_particle::SpriteParticle;
@@ -160,6 +158,7 @@ impl SpriteParticleSystem {
                 particle.origin,
                 particle.current_rotation,
                 texture,
+                Color::WHITE
             );
         }
     }
