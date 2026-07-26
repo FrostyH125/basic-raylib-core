@@ -11,7 +11,7 @@ pub fn smooth_lerp(start_n: f32, end_n: f32, current_t: f32, total_t: f32) -> f3
 }
 
 #[inline]
-/// provided a t value between min_t and max_t, will give an n value between start_n and end_n
+/// provided a t value between min_t and max_t, will give an n value between start_n and end_n smoothly lerped along the start and beginning
 pub fn smooth_lerp_min_max(start_n: f32, end_n: f32, current_t: f32, start_t: f32, end_t: f32) -> f32 {
     let progress = progress(start_t, end_t, current_t);
     let weight = progress * progress * (3.0 - 2.0 * progress);
@@ -22,6 +22,13 @@ pub fn smooth_lerp_min_max(start_n: f32, end_n: f32, current_t: f32, start_t: f3
 #[inline]
 pub fn progress(start: f32, end: f32, current: f32) -> f32 {
     return ((current - start) / (end - start)).clamp(0.0, 1.0);
+}
+
+/// returns a value n between start_n and end_n that directly corresponds to current_t between start_t and end_t
+#[inline]
+pub fn lerp_min_max(start_n: f32, end_n: f32, current_t: f32, start_t: f32, end_t: f32) -> f32 {
+    let progress = progress(start_t, end_t, current_t);
+    return start_n + (end_n - start_n) * progress;
 }
 
 /// returns a Vector2 with x & y: -1.0..=1.0
