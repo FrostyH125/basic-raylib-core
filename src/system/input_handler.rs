@@ -9,18 +9,21 @@ pub struct InputState {
     pub left_currently_held: bool,
     pub left_clicked_once: bool,
     pub left_dragging: bool,
+    pub was_left_dragging: bool,
 
     right_click_pos: Vector2,
     pub right_stopped_dragging_this_frame: bool,
     pub right_currently_held: bool,
     pub right_clicked_once: bool,
     pub right_dragging: bool,
+    pub was_right_dragging: bool,
 
     middle_click_pos: Vector2,
     pub middle_stopped_dragging_this_frame: bool,
     pub middle_currently_held: bool,
     pub middle_clicked_once: bool,
     pub middle_dragging: bool,
+    pub was_middle_dragging: bool,
 
     pub middle_roll: f32
 }
@@ -45,11 +48,18 @@ impl InputState {
             middle_currently_held: false,
             middle_clicked_once: false,
             middle_dragging: false,
-            middle_roll: Default::default()
+            middle_roll: Default::default(),
+            was_middle_dragging: false,
+            was_left_dragging: false,
+            was_right_dragging: false
         }
     }
 
     pub fn update(&mut self, rl: &mut RaylibHandle, camera_zoom: f32) {
+        self.left_stopped_dragging_this_frame = false;
+        self.right_stopped_dragging_this_frame = false;
+        self.middle_stopped_dragging_this_frame = false;
+        
         // get mouse pos
         self.mouse_pos = rl.get_mouse_position() / camera_zoom;
 
@@ -67,6 +77,10 @@ impl InputState {
         let distance_between_left_click_and_current_pos_squared = dx * dx + dy * dy;
         self.left_dragging = self.left_currently_held && distance_between_left_click_and_current_pos_squared >= 0.1 * 0.1;
 
+        if !self.left_dragging && self.was_left_dragging {
+            self.left_stopped_dragging_this_frame = true;
+        }
+
         // handle right mouse button
         self.right_currently_held = rl.is_mouse_button_down(MOUSE_BUTTON_RIGHT);
         self.right_clicked_once = rl.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT);
@@ -80,6 +94,10 @@ impl InputState {
 
         let distance_between_right_click_and_current_pos_squared = dx * dx + dy * dy;
         self.right_dragging = self.right_currently_held && distance_between_right_click_and_current_pos_squared >= 0.1 * 0.1;
+
+        if !self.right_dragging && self.was_right_dragging {
+            self.right_stopped_dragging_this_frame = true;
+        }
 
         // handle middle mouse button
         self.middle_currently_held = rl.is_mouse_button_down(MOUSE_BUTTON_MIDDLE);
@@ -95,8 +113,17 @@ impl InputState {
         let distance_between_click_and_current_pos_squared = dx * dx + dy * dy;
         self.middle_dragging = self.middle_currently_held && distance_between_click_and_current_pos_squared >= 0.1 * 0.1;
 
+        
+        if !self.middle_dragging && self.was_middle_dragging {
+            self.middle_stopped_dragging_this_frame = true;
+        }
+
         self.delta = rl.get_mouse_delta();
         self.middle_roll = rl.get_mouse_wheel_move();
+
+        self.was_left_dragging = self.left_dragging;
+        self.was_right_dragging = self.right_dragging;
+        self.was_middle_dragging = self.middle_dragging;
     }
 
     pub fn reset_and_set_zero_inputs(&mut self) {
