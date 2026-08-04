@@ -69,7 +69,7 @@ pub struct StringSinWaveParameters {
     pub pos: Vector2,
     pub max_wave_height: f32,
     pub wave_speed: f32,
-    pub sin_offset: f32,
+    pub sin_offset_per_character: f32,
     pub color: Color,
     pub font_size: f32,
     pub spacing: f32,
@@ -85,8 +85,13 @@ pub fn draw_string_with_horizontal_sin_wave(
     // necessary buffer for a low allocation char -> &str conversion
     let mut ch_buffer = [0u8, 4];
 
-    let progress = sin_wave_timer.progress();
-    let amplitude = 1.0 - progress;
+    let mut progress = sin_wave_timer.progress();
+
+    if progress >= 1.0 {
+        progress = 1.0;
+    }
+    
+    let amplitude_as_per_progress = 1.0 - progress;
     let t = sin_wave_timer.current_time;
 
     let ch_size =
@@ -94,10 +99,8 @@ pub fn draw_string_with_horizontal_sin_wave(
 
     for (i, ch) in str.chars().enumerate() {
         let x = sin_wave_info.pos.x + ch_size.x * i as f32;
-        let y = sin_wave_info.pos.y
-            + (t * sin_wave_info.wave_speed + i as f32 * sin_wave_info.sin_offset).sin()
-                * amplitude
-                * sin_wave_info.max_wave_height;
+        let y_offset = (t * sin_wave_info.wave_speed + i as f32 * sin_wave_info.sin_offset_per_character).sin() * (sin_wave_info.max_wave_height * amplitude_as_per_progress);
+        let y = sin_wave_info.pos.y + y_offset;
 
         // necessary as d.draw_text_ex cannot take a char
         // needs to manually encode the character into a 4 byte buffer
