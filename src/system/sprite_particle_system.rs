@@ -77,8 +77,9 @@ impl SpriteParticleSystem {
             return;
         }
 
-        let sprite_half_width = sprite.src_rect.width / 2.0;
-        let sprite_half_height = sprite.src_rect.height / 2.0;
+        // clamp to 1.0 if its smaller, half pixel widths & heights are very hard to reason about
+        let sprite_half_width = (sprite.src_rect.width / 2.0).max(1.0);
+        let sprite_half_height = (sprite.src_rect.height / 2.0).max(1.0);
         let origin = Vector2::new(sprite_half_width, sprite_half_height);
 
         // remove the shift done by changing the origin
