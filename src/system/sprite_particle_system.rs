@@ -8,7 +8,7 @@ use crate::graphics::sprite_particle::SpriteParticle;
 pub struct SpriteParticleSystem {
     particles: Vec<SpriteParticle>,
     max_particles: usize,
-    n_particles: usize,
+    pub n_particles: usize,
 }
 
 impl SpriteParticleSystem {
