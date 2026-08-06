@@ -150,8 +150,8 @@ impl SpriteParticleSystem {
             particle.sprite.draw_pro(
                 d,
                 Rectangle::new(
-                    particle.position.x,
-                    particle.position.y,
+                    particle.position.x.round(),
+                    particle.position.y.round(),
                     particle.sprite.src_rect.width,
                     particle.sprite.src_rect.height,
                 ),
