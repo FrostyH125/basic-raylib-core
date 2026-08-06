@@ -1,3 +1,4 @@
+
 use crate::graphics::sprite::Sprite;
 use raylib::{
     color::Color, math::{Rectangle, Vector2}, prelude::RaylibDrawHandle, texture::Texture2D,
@@ -78,12 +79,12 @@ impl SpriteParticleSystem {
         }
 
         // clamp to 1.0 if its smaller, half pixel widths & heights are very hard to reason about
-        let sprite_half_width = (sprite.src_rect.width / 2.0).max(1.0);
-        let sprite_half_height = (sprite.src_rect.height / 2.0).max(1.0);
+        let sprite_half_width = sprite.src_rect.width / 2.0;
+        let sprite_half_height = sprite.src_rect.height / 2.0;
         let origin = Vector2::new(sprite_half_width, sprite_half_height);
 
         // remove the shift done by changing the origin
-        let real_emit_pos = match preserve_original_pos {
+        let mut real_emit_pos = match preserve_original_pos {
             true => {
                 position
                     + Vector2 {
@@ -93,6 +94,11 @@ impl SpriteParticleSystem {
             }
             false => position,
         };
+
+        // this is to fix a graphical bug with thin or long sprites of 1 pixel wide or high
+        // yes it looks goofy, im not making this lib for public use so whatever
+        real_emit_pos.x = real_emit_pos.x.floor() + 0.1;
+        real_emit_pos.y = real_emit_pos.y.floor() + 0.1;
 
         self.particles[self.n_particles].sprite = sprite;
         self.particles[self.n_particles].position = real_emit_pos;
