@@ -3,9 +3,7 @@ use raylib::math::{Rectangle, Vector2};
 
 #[inline]
 /// this only works if t starts from 0
-pub fn smooth_lerp(start_n: f32, end_n: f32, current_t: f32, total_t: f32) -> f32 {
-    let progress = current_t / total_t;
-    let t = progress.clamp(0.0, 1.0);
+pub fn smooth_lerp(start_n: f32, end_n: f32, t: f32) -> f32 {
     let weight = t * t * (3.0 - 2.0 * t);
     return start_n + (end_n - start_n) * weight;
 }
