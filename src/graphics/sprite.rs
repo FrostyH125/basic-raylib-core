@@ -1,5 +1,5 @@
 use raylib::prelude::*;
-
+#[derive(Copy, Clone)]
 pub struct Sprite {
     pub src_rect: Rectangle,
 }
