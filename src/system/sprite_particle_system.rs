@@ -1,10 +1,10 @@
 
-use crate::graphics::sprite::Sprite;
+use crate::raylib::sprite::Sprite;
 use raylib::{
     color::Color, math::{Rectangle, Vector2}, prelude::RaylibDrawHandle, texture::Texture2D,
 };
 
-use crate::graphics::sprite_particle::SpriteParticle;
+use crate::raylib::sprite_particle::SpriteParticle;
 
 pub struct SpriteParticleSystem {
     particles: Vec<SpriteParticle>,
