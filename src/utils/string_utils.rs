@@ -65,7 +65,8 @@ pub fn draw_string_centered_on_pos(
     d.draw_text_ex(font, string, draw_pos, font_size, spacing, color);
 }
 
-pub struct StringSinWaveParameters {
+pub struct StringSinWave {
+    pub string: String,
     pub pos: Vector2,
     pub max_wave_height: f32,
     pub wave_speed: f32,
@@ -73,40 +74,51 @@ pub struct StringSinWaveParameters {
     pub color: Color,
     pub font_size: f32,
     pub spacing: f32,
+    pub timer: Timer,
 }
 
-pub fn draw_string_with_horizontal_sin_wave(
-    d: &mut RaylibDrawHandle,
-    sin_wave_timer: &Timer,
-    str: &str,
-    font: &Font,
-    sin_wave_info: &StringSinWaveParameters,
-) {
-    // necessary buffer for a low allocation char -> &str conversion
-    let mut ch_buffer = [0u8, 4];
-
-    let mut progress = sin_wave_timer.progress();
-
-    if progress >= 1.0 {
-        progress = 1.0;
+impl StringSinWave {
+    fn update(&mut self, dt: f32) {
+        self.timer.track(dt);
     }
-    
-    let amplitude_as_per_progress = 1.0 - progress;
-    let t = sin_wave_timer.current_time;
 
-    let ch_size =
-        font.measure_text(str, sin_wave_info.font_size, sin_wave_info.spacing) / Vector2::new(str.len() as f32, 1.0);
+    fn draw(&self, d: &mut RaylibDrawHandle, font: &Font) {
+        // necessary buffer for a low allocation char -> &str conversion
+        let mut ch_buffer = [0u8, 4];
 
-    for (i, ch) in str.chars().enumerate() {
-        let x = sin_wave_info.pos.x + ch_size.x * i as f32;
-        let y_offset = (t * sin_wave_info.wave_speed + i as f32 * sin_wave_info.sin_offset_per_character).sin() * (sin_wave_info.max_wave_height * amplitude_as_per_progress);
-        let y = sin_wave_info.pos.y + y_offset;
+        let mut progress = self.timer.progress();
 
-        // necessary as d.draw_text_ex cannot take a char
-        // needs to manually encode the character into a 4 byte buffer
-        // and get a reference to it as a &str
-        let s = ch.encode_utf8(&mut ch_buffer);
+        if progress >= 1.0 {
+            progress = 1.0;
+        }
 
-        d.draw_text_ex(font, s, Vector2::new(x, y), sin_wave_info.font_size, sin_wave_info.spacing, sin_wave_info.color);
+        let amplitude_as_per_progress = 1.0 - progress;
+        let time_elapsed = self.timer.current_time;
+
+        let ch_size =
+            font.measure_text(&self.string, self.font_size, self.spacing) / Vector2::new(self.string.len() as f32, 1.0);
+
+        for (i, ch) in self.string.chars().enumerate() {
+            // get the x position first
+            let x = self.pos.x + ch_size.x * i as f32;
+
+            // calculate what to use for the sin() function based on the speed of the wave, 
+            // the current time, and the current char. time * speed will give a base offset, adding the 
+            // offset based on char will give a smooth wave over that
+            let sin_offset = time_elapsed * self.wave_speed + i as f32 * self.sin_offset_per_character;
+
+            // get the final y offset by taking the sin of the sin offset, and multiplying it by 
+            // what the wave height is set at (changed by how far the timer has progressed, moving
+            // toward the center over time)
+            let y_offset = sin_offset.sin() * (self.max_wave_height * amplitude_as_per_progress);
+            let y = self.pos.y + y_offset;
+
+            // necessary as d.draw_text_ex cannot take a char
+            // needs to manually encode the character into a 4 byte buffer
+            // and get a reference to it as a &str
+            let s = ch.encode_utf8(&mut ch_buffer);
+
+            d.draw_text_ex(font, s, Vector2::new(x, y), self.font_size, self.spacing, self.color);
+        }
     }
 }
