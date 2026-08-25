@@ -1,4 +1,9 @@
-use raylib::{color::Color, drawing::RaylibDrawHandle, math::{Rectangle, Vector2}, texture::Texture2D};
+use raylib::{
+    color::Color,
+    drawing::RaylibDrawHandle,
+    math::{Rectangle, Vector2},
+    texture::Texture2D,
+};
 
 use crate::raylib::animation_data::SpriteAnimationData;
 
@@ -37,14 +42,19 @@ impl SpriteAnimationInstance {
             self.current_frame_time -= self.sprite_animation.frame_duration;
             self.current_frame_index += 1;
 
-            if self.current_frame_index as usize >= frame_count {
-                if self.sprite_animation.should_loop {
-                    self.current_frame_index = 0;
-                } else {
-                    self.current_frame_index = frame_count as u8 - 1;
-                    self.finished_playing = true;
-                    break;
-                }
+            if (self.current_frame_index as usize) < frame_count {
+                return;
+            }
+
+            // if it makes it this far then it needs to
+            // make a decision based on whether it should
+            // loop or not
+            if self.sprite_animation.should_loop {
+                self.current_frame_index = 0;
+            } else {
+                self.current_frame_index -= 1;
+                self.finished_playing = true;
+                break;
             }
         }
     }
@@ -53,14 +63,7 @@ impl SpriteAnimationInstance {
         self.sprite_animation.frames[self.current_frame_index as usize].draw(d, pos, texture);
     }
 
-    pub fn draw_flp(
-        &self,
-        d: &mut RaylibDrawHandle,
-        pos: Vector2,
-        texture: &Texture2D,
-        flp_h: bool,
-        flp_v: bool,
-    ) {
+    pub fn draw_flp(&self, d: &mut RaylibDrawHandle, pos: Vector2, texture: &Texture2D, flp_h: bool, flp_v: bool) {
         self.sprite_animation.frames[self.current_frame_index as usize].draw_flp(
             d,
             pos,
