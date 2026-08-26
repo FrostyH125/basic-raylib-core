@@ -23,7 +23,7 @@ impl Tween {
             return;
         }
         self.timer.track(dt);
-        self.current_value = smooth_lerp(self.start_value, self.end_value, self.timer.progress());
+        self.current_value = smooth_lerp(self.start_value, self.end_value, self.timer.current_time, 0.0, self.timer.duration);
     }
 
     pub fn reset(&mut self) {
