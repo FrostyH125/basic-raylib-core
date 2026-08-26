@@ -5,7 +5,7 @@ use raylib::{
     texture::Texture2D,
 };
 
-use crate::raylib::animation_data::SpriteAnimationData;
+use crate::raylib::{animation_data::SpriteAnimationData, sprite::Sprite};
 
 pub struct SpriteAnimationInstance {
     sprite_animation: &'static SpriteAnimationData,
@@ -103,5 +103,9 @@ impl SpriteAnimationInstance {
         self.current_frame_index = 0;
         self.current_frame_time = 0.0;
         self.finished_playing = false;
+    }
+
+    pub fn current_sprite(&self) -> Sprite {
+        return self.sprite_animation.frames[self.current_frame_index as usize];
     }
 }
