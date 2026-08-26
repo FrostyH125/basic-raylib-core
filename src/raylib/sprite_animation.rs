@@ -8,7 +8,7 @@ use raylib::{
 use crate::raylib::{animation_data::SpriteAnimationData, sprite::Sprite};
 
 pub struct SpriteAnimationInstance {
-    sprite_animation: &'static SpriteAnimationData,
+    pub sprite_animation: &'static SpriteAnimationData,
     pub current_frame_time: f32,
     pub current_frame_index: u8,
     pub finished_playing: bool,
